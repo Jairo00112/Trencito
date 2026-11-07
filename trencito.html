@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Trencito 👻✨ | Nuestra Amistad</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --accent-yellow: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* --- PORTADA / HERO --- */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 20px rgba(236, 72, 153, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 span {
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-yellow));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Caveat', cursive;
+            font-size: 4.5rem;
+            display: block;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        /* --- TIMER --- */
+        .counter-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .counter-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            min-width: 90px;
+        }
+
+        .counter-box .num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-pink);
+        }
+
+        .counter-box .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* --- BOTONES --- */
+        .btn-main {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(236, 72, 153, 0.5);
+        }
+
+        /* --- SECCIÓN PRINCIPAL --- */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 6rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin: 4rem 0 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-pink);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- LÍNEA DE TIEMPO (MOMENTOS) --- */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 15px var(--accent-purple);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-icon {
+            right: -20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-icon {
+            left: -20px;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-date {
+            font-size: 0.85rem;
+            color: var(--accent-yellow);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* --- GALERÍA DE FOTOS INTERACTIVA --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .photo-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background-color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 3rem;
+        }
+
+        .photo-caption {
+            padding: 1.2rem;
+        }
+
+        .photo-caption h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-main);
+        }
+
+        .photo-caption p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            width: 100%;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- CARTA ANIMADA --- */
+        .letter-container {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            margin-top: 3rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #e2e8f0;
+        }
+
+        .letter-container p {
+            margin-bottom: 1.5rem;
+        }
+
+        .letter-highlight {
+            color: var(--accent-pink);
+            font-weight: 600;
+        }
+
+        .letter-signature {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            color: var(--accent-yellow);
+            text-align: right;
+            margin-top: 2rem;
+        }
+
+        /* --- BOTÓN DE FRASES DE CHATEO --- */
+        .phrase-generator {
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
+            margin: 4rem 0;
+        }
+
+        .phrase-box {
+            font-family: 'Caveat', cursive;
+            font-size: 2rem;
+            color: var(--accent-yellow);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+
+        /* --- REPRODUCTOR DE MÚSICA FLOTANTE --- */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 10px 18px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .music-btn {
+            background: var(--accent-pink);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h1 span { font-size: 3.5rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; }
+            .timeline-item:nth-child(odd), .timeline-item:nth-child(even) { left: 0; text-align: left; }
+            .timeline-item:nth-child(odd) .timeline-icon, .timeline-item:nth-child(even) .timeline-icon { left: 0; }
+            .letter-container { padding: 2rem 1.5rem; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- REPRODUCTOR DE MÚSICA -->
+    <div class="music-player">
+        <button class="music-btn" id="playBtn" onclick="toggleAudio()"><i class="fa-solid fa-play"></i></button>
+        <span style="font-size: 0.85rem; font-weight: 600;">Música de Fondo ✨</span>
+        <!-- Canción de ejemplo libre de derechos -->
+        <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    </div>
+
+    <!-- PORTADA / HERO -->
+    <header>
+        <div class="badge">Nuestra Amistad 👻✨</div>
+        <h1>Para la más especial<br><span>¡Feliz Día, Trencito! 🚂✨</span></h1>
+        <p class="subtitle">Este es un pequeño espacio dedicado a la mejor amistad, los peores chistes y el hate con más cariño del mundo.</p>
+        
+        <!-- CONTADOR DE TIEMPO -->
+        <div class="counter-container">
+            <div class="counter-box">
+                <div class="num" id="days">0</div>
+                <div class="label">Días de Amistad</div>
+            </div>
+            <div class="counter-box">
+                <div class="num">∞</div>
+                <div class="label">Risas</div>
+            </div>
+            <div class="counter-box">
+                <div class="num">100%</div>
+                <div class="label">Complicidad</div>
+            </div>
+        </div>
+
+        <a href="#carta" class="btn-main" onclick="triggerConfetti()">
+            <i class="fa-solid fa-envelope-open-text"></i> Leer Carta Especial
+        </a>
+    </header>
+
+    <main>
+        <!-- LÍNEA DE TIEMPO DE NUESTROS MOMENTOS -->
+        <h2 class="section-title">Nuestra Historia en Código & Risas 📜</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-code"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Marzo 2025</div>
+                    <div class="timeline-title">El Inicio & Los Códigos Python 🐍</div>
+                    <div class="timeline-desc">Entre scripts, bases de datos SQL y tareas del Comba, nació una amistad sin saber todo el vicio que se venía.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-bus"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Odiseas Diarias</div>
+                    <div class="timeline-title">Sobreviviendo al Transmetro 🚌</div>
+                    <div class="timeline-desc">Las jaladas de pelo en la buseta, el calor sofocante, las rabias compartidas y las idas eternas a Combarranquilla.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-gamepad"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Tardes de Vicio</div>
+                    <div class="timeline-title">Roblox, Among Us & Antojos 🎮</div>
+                    <div class="timeline-desc">Partidas infinitas, acusaciones falsas en Among Us y las salvadas de vida con un Detodito o parada rápida en el Oxxo.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-icon"><i class="fa-solid fa-heart"></i></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Y un día cualquiera</div>
+                    <div class="timeline-title">El Pacto Incondicional 🤝</div>
+                    <div class="timeline-desc">Ese momento especial en el que quedó grabado que, sin importar las bobadas o los líos de la vida, siempre seremos el uno para el otro.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GENERADOR DE FRASES / APODOS -->
+        <div class="phrase-generator">
+            <h3 style="font-size: 1.4rem;">Recordatorio del Día 💬</h3>
+            <div class="phrase-box" id="phraseDisplay">"Gracias por estar ahi siempre para mí"</div>
+            <button class="btn-main" onclick="newPhrase()" style="padding: 0.6rem 1.5rem; font-size: 0.95rem;">
+                <i class="fa-solid fa-shuffle"></i> Otra Frase / Apodo
+            </button>
+        </div>
+
+        <section aria-labelledby="repo-gallery-title">
+            <h2 class="section-title" id="repo-gallery-title">Fotos del Repositorio 📷</h2>
+            <div id="repoGallery" class="photo-grid" aria-live="polite">
+                <div class="empty-state">Cargando fotos del repositorio...</div>
+            </div>
+        </section>
+
+        <!-- CARTA COMPLETA -->
+        <h2 class="section-title" id="carta">La Carta ✉️</h2>
+        <div class="letter-container">
+            <p><strong>Querida Trencito 🚂✨</strong></p>
+            
+            <p>Hoy quería redactar algo diferente para ti, algo que fuera tan único como nuestra amistad. A veces nos la pasamos tirándonos <span class="letter-highlight">hate del bueno</span>, diciéndonos <span class="letter-highlight">"tortuga de lavadero"</span>, <span class="letter-highlight">"ardilla de discoteca"</span> o molestar con tu risa de cerdito 🐷 (que, aunque lo niegues, es icónica). Pero detrás de todos los chistes, las sacadas de lengua y la costumbre irremplazable de ponerte el dedo en la jeta, hay algo muy claro: <span class="letter-highlight">eres una de las personas más increíbles que tengo en mi vida.</span></p>
+
+            <p>Recordar todo lo que hemos pasado da una mezcla de risa y nostalgia. Desde sufrir juntos con los códigos en Python y SQL, hasta aguantar el calor sofocante y las jaladas de pelo en el Transmetro. Pasando por los antojos de Detodito o las paradas en el Oxxo, las varadas cuando Nequi o SuperGiros no querían funcionar, y esas tardes eternas jugando Roblox, Among Us o simplemente hablando de cualquier bobada.</p>
+
+            <p>Quiero que nunca olvides lo mucho que vales. Sé que a veces la vida o la mente nos juegan malas pasadas, pero eres inteligente, fuerte, auténtica y tienes un corazón gigante (aunque intentes disimularlo con tu lado *frozo*). Como nos lo dijimos aquel 17 de mayo: <span class="letter-highlight">esta amistad es incondicional.</span> En las buenas, en las malas, en las rabias y en las risas, siempre vas a contar conmigo.</p>
+
+            <p>Gracias por ser mi confidente, mi compañera de vicio, mi víctima favorita de chistes y, sobre todo, mi gran amiga. Sigue brillando, rompiéndola en todo lo que haces y siendo exactamente tal como eres.</p>
+
+            <div class="letter-signature">
+                Con mucho cariño (y un poquito de hate),<br>
+                Tu hater favorito 👻✨
+            </div>
+        </div>
+    </main>
+
+      <script>
+        // --- CONTADOR DE DÍAS (Desde 15 de Marzo de 2025) ---
+        const startDate = new Date('2025-03-15');
+        const today = new Date();
+        const diffTime = Math.abs(today - startDate);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        document.getElementById('days').innerText = diffDays;
+
+        // --- MÚSICA ---
+        const audio = document.getElementById('bgMusic');
+        const playBtn = document.getElementById('playBtn');
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            } else {
+                audio.paused;
+                audio.pause();
+                playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            }
+        }
+
+        const customPhotoNames = [
+            'Una super modelo',
+            'Momento de conspiración',
+            'Abandono temporal del tren',
+            'La mejor compañía',
+            'Un recuerdo especial',
+            'Chisme con estilo',
+            'El mejor parche',
+            'Risas y complicidad'
+        ];
+
+        async function loadRepoImages() {
+            const gallery = document.getElementById('repoGallery');
+            const branches = ['main', 'master'];
+            const imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.bmp', '.svg'];
+
+            for (const branch of branches) {
+                try {
+                    const response = await fetch(`https://api.github.com/repos/Jairo00112/Trencito/git/trees/${branch}?recursive=1`);
+                    if (!response.ok) continue;
+
+                    const data = await response.json();
+                    const images = (data.tree || [])
+                        .filter(item => item.type === 'blob' && imageExtensions.some(ext => item.path.toLowerCase().endsWith(ext)))
+                        .map(item => ({
+                            name: item.path.split('/').pop(),
+                            url: `https://raw.githubusercontent.com/Jairo00112/Trencito/${branch}/${item.path}`
+                        }));
+
+                    if (!images.length) {
+                        gallery.innerHTML = '<div class="empty-state">Todavía no hay fotos públicas en este repositorio o la rama no coincide. Si subes las imágenes, aparecerán aquí automáticamente.</div>';
+                        return;
+                    }
+
+                    gallery.innerHTML = '';
+                    images.forEach((img, index) => {
+                        const article = document.createElement('article');
+                        article.className = 'photo-card';
+
+                        const label = customPhotoNames[index] || `Foto ${index + 1}`;
+
+                        const image = document.createElement('img');
+                        image.className = 'photo-img';
+                        image.src = img.url;
+                        image.alt = label;
+                        image.title = label;
+                        image.loading = 'lazy';
+                        image.addEventListener('error', () => {
+                            article.innerHTML = '<div class="empty-state">No se pudo cargar esta foto.</div>';
+                        });
+
+                        const caption = document.createElement('div');
+                        caption.className = 'photo-caption';
+                        caption.innerHTML = `<h4>${label}</h4><p>Foto del repositorio</p>`;
+
+                        article.appendChild(image);
+                        article.appendChild(caption);
+                        gallery.appendChild(article);
+                    });
+                    return;
+                } catch (error) {
+                    console.warn(`No se pudo cargar la branch ${branch}:`, error);
+                }
+            }
+
+            gallery.innerHTML = '<div class="empty-state">No se pudieron cargar las fotos desde GitHub. Verifica que el repositorio sea público o actualiza la URL del proyecto.</div>';
+        }
+
+        loadRepoImages();
+
+        // --- CONFETI EN BOTÓN ---
+        function triggerConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // --- FRASES Y APODOS INTERACTIVOS ---
+        const phrases = [
+            '"Reportada por risa de cerdito 🐷✨"',
+            '"¿Sale su partida de Roblox o qué? 🎮"',
+            '"Recordatorio: Te quiero un montón (pero no te lo creas tanto) 👻"',
+            '"¡Eres la mejor, Trencito! 🚂✨"'
+        ];
+
+        function newPhrase() {
+            const display = document.getElementById('phraseDisplay');
+            const random = Math.floor(Math.random() * phrases.length);
+            display.style.opacity = 0;
+            setTimeout(() => {
+                display.innerText = phrases[random];
+                display.style.opacity = 1;
+            }, 200);
+        }
+    </script>
+</body>
+</html>
