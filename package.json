@@ -1,0 +1,12 @@
+{
+  "name": "trencito-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web de Trencito para deploy en Railway",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
